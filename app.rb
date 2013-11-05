@@ -40,10 +40,6 @@ class SinatraJsonViewer < Sinatra::Base
     def h(text)
       Rack::Utils.escape_html(text)
     end
-
-    def paginate
-      will_paginate @contents, :renderer => BootstrapPaginationRenderer
-    end
   end
 
   def initialize(app = nil, params = {})
