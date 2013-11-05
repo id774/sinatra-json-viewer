@@ -32,7 +32,7 @@ class SinatraJsonViewer < Sinatra::Base
       array << hash
     }
 
-    open_file(file, &split_line)
+    open_file(file, &split_line) if File.exist?(file) if /\.txt\Z/ =~ file
     return array
   end
 
@@ -48,6 +48,7 @@ class SinatraJsonViewer < Sinatra::Base
 
   def initialize(app = nil, params = {})
     super(app)
+    @json = []
   end
 
   get '/' do
@@ -57,6 +58,7 @@ class SinatraJsonViewer < Sinatra::Base
 
   get '/:file_name' do
     @json = open_json(@params[:file_name])
+    redirect '/' if @json.length == 0
     # haml @params[:file_name].to_sym
     haml :json
   end
