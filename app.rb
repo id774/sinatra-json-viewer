@@ -5,19 +5,33 @@ require 'rubygems'
 require 'sinatra/base'
 require 'sinatra/reloader'
 require 'haml'
-require './lib/storage'
-require './lib/paginate'
-require 'will_paginate'
-require 'will_paginate/active_record'
-require 'will_paginate/view_helpers'
-require 'will_paginate/view_helpers/sinatra'
 
-class SinatraBootstrap < Sinatra::Base
+class SinatraJsonViewer < Sinatra::Base
   # require './helpers/render_partial'
-  include WillPaginate::Sinatra::Helpers
 
   configure :development do
     register Sinatra::Reloader
+  end
+
+  def open_file(file = 'json.txt', &block)
+    open(file) do |file|
+      file.each_line do |line|
+        block.call(line)
+      end
+    end
+  end
+
+  def open_json(file = 'json.txt')
+    array = []
+    hash  = {}
+
+    split_line = lambda {|line|
+      hash['key'], hash['tag'], hash['value'] = line.strip.split("\t")
+      array << hash
+    }
+
+    open_file(file, &split_line)
+    return array
   end
 
   helpers do
@@ -32,20 +46,11 @@ class SinatraBootstrap < Sinatra::Base
 
   def initialize(app = nil, params = {})
     super(app)
-    @storage = Storage.new
   end
 
   get '/' do
-    @contents = Content.paginate(:page => params[:page], :order => 'updated_at desc')
+    @json = open_json("json.txt")
     haml :index
-  end
-
-  post '/new' do
-    @content = Content.new
-    @content.key = params[:key]
-    @content.value = params[:value]
-    @content.save
-    redirect '/'
   end
 
   run! if app_file == $0

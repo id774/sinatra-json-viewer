@@ -4,7 +4,7 @@ describe "App" do
   include Rack::Test::Methods
 
   def app
-    @app ||= SinatraBootstrap
+    @app ||= SinatraJsonViewer
   end
 
   it "should respond to /" do
