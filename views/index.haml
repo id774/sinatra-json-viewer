@@ -43,5 +43,7 @@
                     %td
                       =h hash['tag']
                     %td
-                      =h hash['value']
+                      - hash['value'].each do |k,v|
+                        =h "[#{k}] #{v}"
+                        %br
 

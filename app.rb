@@ -5,6 +5,7 @@ require 'rubygems'
 require 'sinatra/base'
 require 'sinatra/reloader'
 require 'haml'
+require 'json'
 
 class SinatraJsonViewer < Sinatra::Base
   # require './helpers/render_partial'
@@ -26,7 +27,8 @@ class SinatraJsonViewer < Sinatra::Base
     hash  = {}
 
     split_line = lambda {|line|
-      hash['key'], hash['tag'], hash['value'] = line.strip.split("\t")
+      hash['key'], hash['tag'], json = line.strip.split("\t")
+      hash['value'] = JSON.parse(json)
       array << hash
     }
 
