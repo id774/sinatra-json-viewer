@@ -1,0 +1,28 @@
+!!! 5
+%html
+  %head
+    %meta{:'http-equiv' => "Content-Type", :content => "text/html; charset=utf-8"}
+    %title sinatra-bootstrap
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    %link{ href: "/stylesheets/application.css", rel: "stylesheet" }/
+    %link{ href: "/stylesheets/bootstrap.css", rel: "stylesheet" }/
+    %link{ href: "/stylesheets/bootstrap-responsive.css", rel: "stylesheet" }/
+    %link{ href: "/stylesheets/style.css", rel: "stylesheet" }/
+    %script{:type => "text/javascript", :src => "/javascripts/application.js"}
+  %body(class='apps-index-page' data-spy="scroll" data-target=".subnav" data-offset="50")
+    = yield
+
+    %section{:id => "footer"}
+      .container
+        %footer{:class=>"footer"}
+          %hr
+          %p{:class=>"pull-right pager"}
+            %a{:href=>"http://id774.net"}
+              &larr; Home
+            %a{:href=> "/"}
+              &uarr; Top
+          %p
+            The public web contents published by me except for the quotation are licensed under the following condition.<br>
+            Code dual licensed under the <a href="http://www.gnu.org/copyleft/gpl.html">GPLv3</a>/<a href="http://www.gnu.org/copyleft/lesser.html">LGPLv3</a>. Documentation licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nd/3.0/">CC (BY-ND) 3.0</a>.
