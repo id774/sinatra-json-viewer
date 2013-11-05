@@ -17,4 +17,4 @@ public/assets/*.js
 public/assets/*.gz
 public/assets/*.yml
 .svn
-json.txt
+*.txt

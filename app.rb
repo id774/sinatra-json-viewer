@@ -51,8 +51,14 @@ class SinatraJsonViewer < Sinatra::Base
   end
 
   get '/' do
-    @json = open_json("json.txt")
+    @files = Dir::entries('.').sort
     haml :index
+  end
+
+  get '/:file_name' do
+    @json = open_json(@params[:file_name])
+    # haml @params[:file_name].to_sym
+    haml :json
   end
 
   run! if app_file == $0

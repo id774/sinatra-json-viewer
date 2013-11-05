@@ -24,7 +24,7 @@
               %a{:href => "https://github.com/id774"} GitHub
 
 %section{:id => "main"}
-  - if @files.length > 0
+  - if @json.length > 0
     .container
       .content
         .row
@@ -32,15 +32,17 @@
             %table.table.table-striped
               %thead
                 %tr
-                  %th Report file name
-                  %th Link
+                  %th Key
+                  %th Tag
+                  %th Value
               %tbody
-                - @files.each do |file|
-                  - if /\.txt\Z/ =~ file
-                    %tr
-                      %td
-                        =h file
-                      %td
-                        %a{:href => file}
-                          =h file
+                - @json.each do |hash|
+                  %tr
+                    %td
+                      =h hash['key']
+                    %td
+                      =h hash['tag']
+                    %td
+                      - hash['value'].each do |k,v|
+                        =h "[#{k}] #{v}"
 
