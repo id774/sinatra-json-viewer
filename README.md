@@ -2,11 +2,6 @@
 
 ## A simple json data viewer
 
-Sinatra Bootstrap supports:
-
-
-## What is the purpose of Sinatra JSON Viewer?
-
 Preview json data for presentation, etc.
 
 
