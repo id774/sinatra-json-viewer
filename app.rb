@@ -9,23 +9,24 @@ require 'json'
 class SinatraJsonViewer < Sinatra::Base
   # require './helpers/render_partial'
 
-  def open_file(file = 'json.txt', &block)
-    open(file) do |file|
-      file.each_line do |line|
-        block.call(line)
-      end
-    end
-  end
 
   def open_json(file = 'json.txt')
     array = []
-    hash  = {}
 
     split_line = lambda {|line|
+      hash  = {}
       hash['key'], hash['tag'], json = line.strip.split("\t")
       hash['value'] = JSON.parse(json)
       array << hash
     }
+
+    def open_file(file = 'json.txt', &block)
+      open(file) do |file|
+        file.each_line do |line|
+          block.call(line)
+        end
+      end
+    end
 
     open_file(file, &split_line) if File.exist?(file) if /\.txt\Z/ =~ file
     return array
