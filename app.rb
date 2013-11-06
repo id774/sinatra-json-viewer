@@ -3,16 +3,11 @@
 
 require 'rubygems'
 require 'sinatra/base'
-require 'sinatra/reloader'
 require 'haml'
 require 'json'
 
 class SinatraJsonViewer < Sinatra::Base
   # require './helpers/render_partial'
-
-  configure :development do
-    register Sinatra::Reloader
-  end
 
   def open_file(file = 'json.txt', &block)
     open(file) do |file|
@@ -45,6 +40,11 @@ class SinatraJsonViewer < Sinatra::Base
   def initialize(app = nil, params = {})
     super(app)
     @json = []
+    @root = Sinatra::Application.environment == :production ? '/sinatra-json-viewer/' : '/'
+  end
+
+  def logger
+    env['app.logger'] || env['rack.logger']
   end
 
   get '/' do
