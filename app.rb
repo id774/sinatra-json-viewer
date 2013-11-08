@@ -16,7 +16,11 @@ class SinatraJsonViewer < Sinatra::Base
     split_line = lambda {|line|
       hash  = {}
       hash['key'], hash['tag'], json = line.strip.split("\t")
-      hash['value'] = JSON.parse(json)
+      begin
+        hash['value'] = JSON.parse(json)
+      rescue JSON::ParserError
+        hash['value'] = json
+      end
       array << hash
     }
 

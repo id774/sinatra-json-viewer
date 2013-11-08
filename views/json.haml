@@ -43,6 +43,9 @@
                     %td
                       =h hash['tag']
                     %td
-                      - hash['value'].each do |k,v|
-                        =h "[#{k}] #{v}"
+                      - if hash['value'].class == Hash
+                        - hash['value'].each do |k,v|
+                          =h "[#{k}] #{v}"
+                      - else
+                        =h hash['value']
 
